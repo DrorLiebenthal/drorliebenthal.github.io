@@ -1,157 +1,92 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Blog | Dror Liebenthal</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/clean-blog.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
-    
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <header>
-                    <h1 class="name"><a href="index.html">Dror Liebenthal</a></h1>
-                </header>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="index.html">Blog</a>
-                    </li>
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+<!DOCTYPE HTML>
+<html lang = "en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name = "site-description" content = "Infectious Disease Dynamics">
+        <meta name = "author" content = "Dror Liebenthal">
+        <script type = "text/javascript"src = "raphael-min.js"></script>
+        <link rel = "stylesheet" type="text/css" href = "http://fonts.googleapis.com/css?family=Open+Sans">
+        <script type = "text/javascript"src = "jquery-1.10.2.js"></script>
+        <script type="text/javascript" src = "environment.js"></script>
+        <script type="text/javascript" src = "Animal.js"></script>
+        <script type = "text/javascript"src = "environment_jQuery.js"></script>
+        <link href = "environment.css" rel = "stylesheet">
+        <title>Infectious Disease Dynamics</title>
+    </head>
+    <body>
+        <div id = "nav">
+            <button onclick = "newEnv()">Start</button>
+            <button onclick = "clearEnv()">Stop</button>
+            <form name = "params">
+                Initial Number of Susceptible People: <br>
+                <input type = "number" name = "sus" value = "100"> <br>
+                Initial Number of Infected People: <br>
+                <input type = "number" name = "inf" value = "1"> <br>
+                Initial Number of Recovered People: <br>
+                <input type = "number" id = "iR" name = "rec" value = "0" disabled> <br>
+                Probability of Contact Resulting in Infection [0-1]:<br>
+                <input type = "number" name = "infProb" value = "0.5"> <br>
+                Birth Rate (per second): <br>
+                <input type = "number" name = "bRate" value = "0"> <br>
+                Death Rate (per second): <br>
+                <input type = "number" name = "dRate" value = "0"> <br>
+                Recovery Time (seconds post-infection):
+                <input type = "number" id = "rR" name = "rRate" value = "10" disabled> <br>
+                Model: <br>
+                SI
+                <input type = "radio" name = "mod" value = "SI" checked>
+                SIS
+                <input type = "radio" name = "mod" value = "SIS"> <br>
+                SIR
+                <input type = "radio" name = "mod" value = "SIR"> <br>
+            </form>
+            <div><img src="sus-legend.png"> S = <span id = "cS"></span></div>
+            <div><img src = "inf-legend.png"></li> I = <span id = "cI"></span></div>
+            <div><img src="rec-legend.png"> R = <span id = "cR"></span></div>
         </div>
-        <!-- /.container -->
-    </nav>
-
-    <!-- First Post -->
-    <div class="intro-header" style="background-image: url('img/background-bw.jpg')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="site-heading" class="post-preview">
-                        <a href='#' >
-                            <h2 class="post-title">Keeping your day job and traveling the world</h2>
-                        </a>
+        <div id = "main">
+            <span id = "blurb">Infectious Disease Dynamics</span>
+            <div id="environment"></div>
+            <div id = "container">
+                <div id = "one">
+                    <p class="slide"><a href = "#" class = "btn-slide">More on Input Parameters</a></p>
+                    <div class = "infoPanel">
+                        <p class = "info">
+                            <b>SI</b>: Susceptible-Infected (no recovery)<br>
+                            <b>SIS</b>: Susceptible-Infected-Susceptible (no immunity) <br>
+                            <b>SIR</b>: Susceptible-Infected-Recovered (recovered individuals are immune) <br>
+                            <br>
+                            Input probability of infection &gt; 1 or &lt; 0 will be considered as 0 or 1, respectively. <br>
+                            <br>
+                            Recovery time is only applicable for the SIS and SIR models. Initial number of recovered people can only be specified for the SIR model. <br>
+                            <br>
+                            Animation begins to slow down in environments with &gt; 400 individuals.
+                        </p>
+                    </div>
+                </div>
+                <div id = "two">
+                   <p class="slide"><a href = "#" class = "btn-slide">About This Project / Usage</a></p>
+                   <div class = "infoPanel">
+                        <p class = "info">
+                            <b>About</b>: This project was created predominantly using JavaScript, along with a little jQuery and the Raphael.js framework for graphics. It features a nifty sorting-based algorithm for efficient collision recognition. A link to the source code will be provided shortly. <br>
+                            <br>
+                            Have questions? Ideas for improvements? Found a bug? Get in touch <a href = "mailto:dliebenthal1505@gmail.com"><b>here</b></a>.
+                            <br><br>
+                            <b>Usage</b>: I'd suggest starting by messing around with initial counts of susceptible and infected people, and with probability of infection. Check out the different models and experiment with various birth and death rates. Find a combination of parameters that will result in a dynamic equilibrium! There are many many possibilities. Finally, note how very small differences in parameters such as recovery time or probability of infection can mean the difference between an infection rapidly proliferating or dying out.
+                        </p>
+                    </div>
+                </div>
+                <div id = "three">
+                   <p class="slide"><a href = "#" class = "btn-slide">Room for Improvement</a></p>
+                   <div class = "infoPanel">
+                        <p class = "info">
+                            As it stands, starting position and speed for each individual are based on simple random number generation. Of course, contact patterns in real environments are much more complicated than that. Future iterations may feature movement based on actual social contact theory. For example, individuals could be clustered into families with whom they'd have frequent contact. Alternately, each individual could maintain a particular set of other individuals with whom they make regular contact at specified rates.
+                            <br><br>
+                            It will also be necessary to standardize time in future iterations. This was tough to do in the first iteration because performance constraints in high-volume environments cause time to "slow down", meaning animation is more choppy. Once time is standardized, useful parameters like contact rate can be reported and the relationship between contact rate and environment density can be examined.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-preview">
-                    <a href="#">
-                        <h2 class="post-title">
-                            On the "Where are you from?" question
-                        </h2>
-                        <h3 class="post-subtitle">
-                            And why the answer depends on who's asking.
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Dror Liebenthal</a> on September 24, 2014</p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="#">
-                        <h2 class="post-title">
-                            On Steph Curry and eye-catching talent
-                        </h2>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Dror Liebenthal</a> on September 18, 2014</p>
-                </div>
-                <hr>
-                <div class="post-preview">
-                    <a href="#">
-                        <h2 class="post-title">
-                            On non-conventional paths and optimizing for learning
-                        </h2>
-                        <h3 class="post-subtitle">
-                            And whether "regret minimization" is coherent.
-                        </h3>
-                    </a>
-                    <p class="post-meta">Posted by <a href="#">Dror Liebenthal</a> on August 24, 2014</p>
-                </div>
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    <li class="next">
-                        <a href="#">Older Posts &rarr;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <p class="copyright text-muted">Copyright &copy; Dror Liebenthal 2015</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="js/clean-blog.min.js"></script>
-
-</body>
-
+    </body>
 </html>
