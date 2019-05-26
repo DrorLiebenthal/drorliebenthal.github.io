@@ -2,91 +2,18 @@
 <html lang = "en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name = "site-description" content = "Infectious Disease Dynamics">
+        <meta name = "site-description" content = "Home">
         <meta name = "author" content = "Dror Liebenthal">
-        <script type = "text/javascript"src = "js/raphael-min.js"></script>
         <link rel = "stylesheet" type="text/css" href = "http://fonts.googleapis.com/css?family=Open+Sans">
-        <script type = "text/javascript"src = "js/jquery-1.10.2.js"></script>
-        <script type="text/javascript" src = "js/environment.js"></script>
-        <script type="text/javascript" src = "js/Animal.js"></script>
-        <script type = "text/javascript"src = "js/environment_jQuery.js"></script>
-        <link href = "css/environment.css" rel = "stylesheet">
-        <title>Infectious Disease Dynamics</title>
+        <title>Home</title>
     </head>
     <body>
-        <div id = "nav">
-            <button onclick = "newEnv()">Start</button>
-            <button onclick = "clearEnv()">Stop</button>
-            <form name = "params">
-                Initial Number of Susceptible People: <br>
-                <input type = "number" name = "sus" value = "100"> <br>
-                Initial Number of Infected People: <br>
-                <input type = "number" name = "inf" value = "1"> <br>
-                Initial Number of Recovered People: <br>
-                <input type = "number" id = "iR" name = "rec" value = "0" disabled> <br>
-                Probability of Contact Resulting in Infection [0-1]:<br>
-                <input type = "number" name = "infProb" value = "0.5"> <br>
-                Birth Rate (per second): <br>
-                <input type = "number" name = "bRate" value = "0"> <br>
-                Death Rate (per second): <br>
-                <input type = "number" name = "dRate" value = "0"> <br>
-                Recovery Time (seconds post-infection):
-                <input type = "number" id = "rR" name = "rRate" value = "10" disabled> <br>
-                Model: <br>
-                SI
-                <input type = "radio" name = "mod" value = "SI" checked>
-                SIS
-                <input type = "radio" name = "mod" value = "SIS"> <br>
-                SIR
-                <input type = "radio" name = "mod" value = "SIR"> <br>
-            </form>
-            <div><img src="img/sus-legend.png"> S = <span id = "cS"></span></div>
-            <div><img src = "img/inf-legend.png"></li> I = <span id = "cI"></span></div>
-            <div><img src="img/rec-legend.png"> R = <span id = "cR"></span></div>
-        </div>
-        <div id = "main">
-            <span id = "blurb">Infectious Disease Dynamics</span>
-            <div id="environment"></div>
-            <div id = "container">
-                <div id = "one">
-                    <p class="slide"><a href = "#" class = "btn-slide">More on Input Parameters</a></p>
-                    <div class = "infoPanel">
-                        <p class = "info">
-                            <b>SI</b>: Susceptible-Infected (no recovery)<br>
-                            <b>SIS</b>: Susceptible-Infected-Susceptible (no immunity) <br>
-                            <b>SIR</b>: Susceptible-Infected-Recovered (recovered individuals are immune) <br>
-                            <br>
-                            Input probability of infection &gt; 1 or &lt; 0 will be considered as 0 or 1, respectively. <br>
-                            <br>
-                            Recovery time is only applicable for the SIS and SIR models. Initial number of recovered people can only be specified for the SIR model. <br>
-                            <br>
-                            Animation begins to slow down in environments with &gt; 400 individuals.
-                        </p>
-                    </div>
-                </div>
-                <div id = "two">
-                   <p class="slide"><a href = "#" class = "btn-slide">About This Project / Usage</a></p>
-                   <div class = "infoPanel">
-                        <p class = "info">
-                            <b>About</b>: This project was created predominantly using JavaScript, along with a little jQuery and the Raphael.js framework for graphics. It features a nifty sorting-based algorithm for efficient collision recognition. A link to the source code will be provided shortly. <br>
-                            <br>
-                            Have questions? Ideas for improvements? Found a bug? Get in touch <a href = "mailto:dliebenthal1505@gmail.com"><b>here</b></a>.
-                            <br><br>
-                            <b>Usage</b>: I'd suggest starting by messing around with initial counts of susceptible and infected people, and with probability of infection. Check out the different models and experiment with various birth and death rates. Find a combination of parameters that will result in a dynamic equilibrium! There are many many possibilities. Finally, note how very small differences in parameters such as recovery time or probability of infection can mean the difference between an infection rapidly proliferating or dying out.
-                        </p>
-                    </div>
-                </div>
-                <div id = "three">
-                   <p class="slide"><a href = "#" class = "btn-slide">Room for Improvement</a></p>
-                   <div class = "infoPanel">
-                        <p class = "info">
-                            As it stands, starting position and speed for each individual are based on simple random number generation. Of course, contact patterns in real environments are much more complicated than that. Future iterations may feature movement based on actual social contact theory. For example, individuals could be clustered into families with whom they'd have frequent contact. Alternately, each individual could maintain a particular set of other individuals with whom they make regular contact at specified rates.
-                            <br><br>
-                            It will also be necessary to standardize time in future iterations. This was tough to do in the first iteration because performance constraints in high-volume environments cause time to "slow down", meaning animation is more choppy. Once time is standardized, useful parameters like contact rate can be reported and the relationship between contact rate and environment density can be examined.
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div id = "container">
+            <h1>Dror Liebenthal</h1>
+            <ul>
+                <li><a href="/books">Books</a></li>
+                <li><a href="/disease-model">Infectious Disease Dynamics</a></li>
+            </ul>
         </div>
     </body>
 </html>
